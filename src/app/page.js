@@ -1,30 +1,41 @@
 "use client";
 import { useQuery, useIsFetching } from "@tanstack/react-query";
+import { useState, useEffect } from "react";
+import { posts } from "../../api/auth";
 
 export default function Home() {
-  const { data, isLoading, isError, isSuccess } = useQuery({
-    queryKey: ["todos"],
-    queryFn: () => {
-      return fetch("https://jsonplaceholder.typicode.com/todos").then((res) =>
-        res.json()
-      );
-    },
+  const { data, isError, isSuccess, isLoading } = useQuery({
+    queryKey: ["posts"],
+    queryFn: posts,
   });
 
+  // const [data, setData] = useState([]);
+
+  // useEffect(() => {
+  //   fetch("https://jsonplaceholder.typicode.com/posts")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((res) => {
+  //       setData(res);
+  //     });
+  // },[]);
+
   if (isLoading) {
-    return <h1> Loading </h1>;
+    return <h3> Loading ... </h3>;
   }
 
   if (isError) {
-    return <div> Error </div>;
+    return <h3> Error ... </h3>;
   }
 
   if (isSuccess) {
     return (
       <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-sky-100 hover:bg-sky-50">
         <h1> Hello </h1>
+
         <ul>
-          {data?.map((item) => (
+          {data?.data?.map((item) => (
             <ol>
               {item.id} . {item.title}
             </ol>
