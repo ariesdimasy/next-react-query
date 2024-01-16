@@ -1,12 +1,18 @@
 "use client";
 import { useQuery, useIsFetching } from "@tanstack/react-query";
 import { useState, useEffect } from "react";
-import { posts } from "../../api/auth";
+import { productUser } from "../../api/auth";
 
 export default function Home() {
-  const { data, isError, isSuccess, isLoading } = useQuery({
+  const myData = [];
+  const {
+    data = myData,
+    isError,
+    isSuccess,
+    isLoading,
+  } = useQuery({
     queryKey: ["posts"],
-    queryFn: posts,
+    queryFn: productUser,
   });
 
   // const [data, setData] = useState([]);
@@ -34,13 +40,7 @@ export default function Home() {
       <main className="flex min-h-screen flex-col items-center justify-between p-24 bg-sky-100 hover:bg-sky-50">
         <h1> Hello </h1>
 
-        <ul>
-          {data?.data?.map((item) => (
-            <ol>
-              {item.id} . {item.title}
-            </ol>
-          ))}
-        </ul>
+        {JSON.stringify(data)}
       </main>
     );
   }

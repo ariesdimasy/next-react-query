@@ -48,3 +48,18 @@ export async function registerAxios(name, email, password) {
 export async function posts() {
   return await axios.get("https://jsonplaceholder.typicode.com/posts");
 }
+
+export async function productUser() {
+  const token = localStorage.getItem("token");
+
+  console.log("token => ", token);
+
+  return await axios.get(
+    process.env.NEXT_PUBLIC_API_URL + "/api/product/product-user",
+    {
+      headers: {
+        Authorization: "Bearer " + token,
+      },
+    }
+  );
+}
